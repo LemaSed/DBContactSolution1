@@ -15,15 +15,50 @@ namespace DBContactSolution1
 	{
 		private const string connectionString = @"Server=(localdb)\MSSQLLocalDB; Database=DBscrum; Integrated Security=true";
 		public static int CreateContact()
+		private const string connectionString = @"Server = (local)\MSSQLLocalID; Database = DBscrum; Integrated Security=true";
+		private static readonly SqlConnection Connection;
+		static SQLRepository()  
 		{
-			using (SqlConnection connection = new SqlConnection(connectionString))
-			{
+			Connection = new SqlConnection(connectionString);
+		}
+		public static int CreateContact(string ssn, string firstName, string LastName )
+		{
+			int identityId = 0;
+			const string cmdText = "INSERT into Contact (SSN, FirstName, LastName)" +
+				"VALUES @ssn, @firstName, @lastName " +
+				"SELECT SCOPE_IDENTITY() as IdentityId ";
 
-				string queryString = "SELECT contact.Firstname, contact.Lastname, Contact.SSN, Contact.id " +
-				"FROM contact " +
-				"ORDER BY contact.id ASC;";
+			List<SqlParameter> parameterList = new List<SqlParameter> {
+			new SqlParameter("ssn", ssn),
+			new SqlParameter ("firstName",firstName), 
+			new SqlParameter("lastName", LastName)
+			};
+
+			try
+			{
+				using (SqlCommand command = new SqlCommand(cmdText, Connection ))
+				{
+					Connection.Open();
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							identityId = (int)(decimal)reader["IdentityID"];
+						}
+					}
+				}
 			}
-		
+			catch (Exception e)
+			{
+				string errMsg = e.Message;
+				return 0;
+			}
+			finally
+			{
+				Connection.Close();
+			}
+
+			return identityId;
 		}
 
 		public static string ReadContact(int contactId)
