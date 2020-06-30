@@ -6,16 +6,17 @@ namespace ContactDBLibrary
     public class Contact
     {
         public int Id { get; private set; }
-        public int SSN { get; private set; }
+        public string SSN { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
 
-        public Contact(int id, int sSN, string firstName, string lastName)
+        
+        public static int CreateContact(string ssn, string firstName, string lastName)
         {
-            Id = id;
-            SSN = sSN;
-            FirstName = firstName;
-            LastName = lastName;
+            const string cmdText = "INSERT INTO Contact(SSN, FirstName, LastName) " +
+                                    "VALUES (@ssn, @firstName, @lastName)";
+            return 0;
+
         }
 
     }
@@ -28,12 +29,10 @@ namespace ContactDBLibrary
         public int Zip { get; set; }
 
 
-        public Address(int id, string street, string city, int zip)
+       
+        public override string ToString()
         {
-            Id = id;
-            Street = street;
-            City = city;
-            Zip = zip;
+            return $"Address: {Id} { Street} {City} {Zip}";
         }
 
     }
@@ -43,12 +42,7 @@ namespace ContactDBLibrary
         public String Info { get; set; }
         public int ContactId { get; set; }
 
-        public ContactInformation(int id, string info, int contactId)
-        {
-            Id = id;
-            Info = info;
-            ContactId = contactId;
-        }
+       
    
     }
     public class ContactAddress
@@ -58,12 +52,7 @@ namespace ContactDBLibrary
         public int AddressId { get; set; }
 
 
-        public ContactAddress(int id, int contactId, int addressId)
-        {
-            Id = id;
-            ContactId = contactId;
-            AddressId = addressId;
-        }
+       
    
     }
 }
