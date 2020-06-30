@@ -14,8 +14,7 @@ namespace DBContactSolution1
 	public static class SQLRepository
 	{
 		private const string connectionString = @"Server=(localdb)\MSSQLLocalDB; Database=DBscrum; Integrated Security=true";
-		public static int CreateContact()
-		private const string connectionString = @"Server = (local)\MSSQLLocalID; Database = DBscrum; Integrated Security=true";
+	
 		private static readonly SqlConnection Connection;
 		static SQLRepository()  
 		{
