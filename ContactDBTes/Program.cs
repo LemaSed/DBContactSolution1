@@ -1,6 +1,7 @@
 ﻿using System;
+using ContactDBLibrary;
 
-namespace ContactDBLibrary
+namespace ContactDBTest
 {
 	class Program
 	{
@@ -10,4 +11,3 @@ namespace ContactDBLibrary
 		}
 	}
 }
-	
