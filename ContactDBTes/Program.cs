@@ -9,6 +9,9 @@ namespace ContactDBTest
 		static void Main(string[] args)
 		{
 			SQLRepository.CreateContact("516325", "Lema", "Sediqi");
+			Console.WriteLine("test");
+            Console.WriteLine(	SQLRepository.ReadContact(1));
+            
 		}
 	}
 }

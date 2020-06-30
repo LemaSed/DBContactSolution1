@@ -7,12 +7,13 @@ using System.Data.SqlTypes;
 using System.Data;
 using System.Data.Common;
 using System.Reflection.Metadata.Ecma335;
+using System.Collections.Specialized;
 
 namespace DBContactSolution1
 {
 	public static class SQLRepository
 	{
-		private const string connectionString = @"Server = (localdb)\MSSQLLocalDB; Database = DBscrum; Integrated Security=true";
+		private const string connectionString = @"Server = (local)\MSSQLLocalID; Database = DBscrum; Integrated Security=true";
 		private static readonly SqlConnection Connection;
 		static SQLRepository()  
 		{
@@ -78,19 +79,5 @@ namespace DBContactSolution1
 			return identityId;
 		}
 
-		/*public static int CreateContactInformation(int contactId, string info)
-		{
-			int identityId = 0;
-
-			const string cmdText = "INSERT into ContactInformatino (contactId, info)" +
-				"VALUES @contactId, @info" +
-				"SELECT SCOPE_IDENTITY() as IdentityId";
-
-			List<SqlParameter> parameter = new List<SqlParameter>{
-			new SqlParameter("contactId", contactId),
-			new SqlParameter ("info", info),
-			new SqlParameter("lastName", LastName)
-			};
-		}*/
 	}
 }
