@@ -78,6 +78,51 @@ namespace DBContactSolution1
 
 			return identityId;
 		}
+		public static string ReadContact(int contactId)
+		{
+			// Change "Object" to correct DBModel type.
+			string contactString = null;
+
+			string cmdText = "SELECT Contact.Id, Contact.SSN, Contact.FirstName, Contact.LastName " +
+							 "FROM Contact " +
+							 "WHERE Contact.Id = @contactId";
+
+
+
+			using (SqlConnection Connection = new SqlConnection(connectionString))
+
+				try
+				{
+					using (SqlCommand command = new SqlCommand(cmdText, Connection))
+
+					{
+						Connection.Open();
+						SqlParameter para = new SqlParameter("contactId", contactId);
+						command.Parameters.Add(para);
+
+						using (SqlDataReader reader = command.ExecuteReader())
+						{
+							if (reader.Read())
+							{
+								contactString = $"ContactId {reader[0]}, SSN {reader[1]}, FirstName {reader[2]}, LastName {reader[3]}";
+
+							}
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					string errMsg = e.Message;
+					Console.WriteLine("ÆSJ {0}", e.Message);
+					return null;
+				}
+				finally
+				{
+					Connection.Close();
+				}
+
+			return contactString;
+		}
 
 	}
 }
