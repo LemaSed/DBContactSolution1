@@ -1,6 +1,6 @@
 ﻿using System;
 using ContactDBLibrary;
-
+using DBContactSolution1;
 
 namespace ContactDBTest
 {
@@ -8,7 +8,9 @@ namespace ContactDBTest
 	{
 		static void Main(string[] args)
 		{
-			
+			Console.WriteLine("test");
+            Console.WriteLine(	SQLRepository.ReadContact(1));
+            
 		}
 	}
 }
