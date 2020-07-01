@@ -20,7 +20,7 @@ namespace DBContactSolution1
 			Connection = new SqlConnection(connectionString);
 		}
 
-		public static int CreateContact(string ssn, string firstName, string LastName)
+		public static int CreateContact(string ssn, string firstName, string lastName)
 		{
 			int identityId = 0;
 			const string cmdText = "INSERT into Contact (SSN, FirstName, LastName) " +
@@ -44,7 +44,7 @@ namespace DBContactSolution1
 
 					sqlParameter = command.CreateParameter();
 					sqlParameter.ParameterName = "@LastName";
-					sqlParameter.Value = LastName;
+					sqlParameter.Value = lastName;
 					command.Parameters.Add(sqlParameter);
 
 					//command.Parameters.Add(parameterList);
@@ -204,5 +204,50 @@ namespace DBContactSolution1
             return (rowsAffected == 1);
         }
 
+		public static string ReadAddress(int addressId)
+		{
+			string addressString = null;
+			string cmdText = "SELECT Address.Id, Address.Street, Address.City, Address.Zip " +
+			                 "FROM Address " +
+			                 "WHERE Address.Id = @addressId";
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				try
+				{
+					using (SqlCommand command = new SqlCommand(cmdText, Connection))
+					{
+						Connection.Open();
+						SqlParameter parameter = new SqlParameter("addressId", addressId);
+						command.Parameters.Add(parameter);
+
+						using (SqlDataReader reader = command.ExecuteReader())
+						{
+							if (reader.Read())
+							{
+								addressString =
+									$"AddressId {reader[0]}, Street {reader[1]}, City {reader[2]}, Zip{reader[3]} ";
+							}
+						}
+					}
+				}
+
+				catch (Exception e)
+				{
+					Console.WriteLine(e.Message);
+
+					return null;
+				}
+			}
+
+			return addressString;
+
+		}
+
 	}
 }
+//command.Parameters.Add("@name SqlDbType.NVarChar).Value = name;  <-- En lettere måte å legge til parameter til SQL command. 
+//ExecuteNonQuery er det en static spørring. Du får ingenting tilbake
+// ExecuteReader = Ville fått en read object som man kan få tilbake. For å få printet ut radene i tabellen: 
+//while (DataTableReader.Read()){
+	//osv
