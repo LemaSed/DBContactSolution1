@@ -5,20 +5,28 @@ namespace ContactDBLibrary
 {
     public class Contact
     {
+        
+
         public int Id { get; private set; }
         public string SSN { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
 
-        
-        public static int CreateContact(string ssn, string firstName, string lastName)
+        public Contact(int id, string ssn, string firstName, string lastName)
         {
-            const string cmdText = "INSERT INTO Contact(SSN, FirstName, LastName) " +
-                                    "VALUES (@ssn, @firstName, @lastName)";
-            return 0;
-
+            Id = id;
+            SSN = ssn;
+            FirstName = firstName;
+            LastName = lastName;
         }
 
+
+        
+
+        public override string ToString()
+        {
+            return $"Name: {FirstName} {LastName}\tId: {Id}\tSSN: {SSN}\t";
+        }
     }
 
     public class Address

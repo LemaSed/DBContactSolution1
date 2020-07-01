@@ -8,8 +8,8 @@ namespace ContactDBTest
 	{
 		static void Main(string[] args)
         {
-
-            SQLRepository.DeleteContact(2);
+            Console.WriteLine(Seb.CreateContact(3).ToString());
+            
         }
 	}
 }
