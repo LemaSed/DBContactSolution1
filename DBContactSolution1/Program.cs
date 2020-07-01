@@ -7,8 +7,8 @@ namespace ContactDBLibrary
 	{
 		static void Main(string[] args)
 		{
-	
 
+			Console.WriteLine(SQLRepository.UpdateAddress(5, "Lalala", "blahblah", "5163"));
 		}
 	}
 }
