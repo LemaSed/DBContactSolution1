@@ -76,7 +76,7 @@ namespace DBContactSolution1
 
 		public static string ReadContact(int contactId)
 		{
-			// Change "Object" to correct DBModel type.
+			
 			string contactString = null;
 
 			string cmdText = "SELECT Contact.Id, Contact.SSN, Contact.FirstName, Contact.LastName " +
@@ -112,10 +112,7 @@ namespace DBContactSolution1
 					Console.WriteLine("ÆSJ {0}", e.Message);
 					return null;
 				}
-				/*finally
-				{
-					Connection.Close();
-				}*/
+				
 
 			return contactString;
 		}
@@ -149,6 +146,51 @@ namespace DBContactSolution1
                 return false;
             }
             return (rowsAffected == 1);
+        }
+
+		        public static string ReadContactInformation(int contactId)
+        {
+            string contactString = null;
+
+            string cmdText = "SELECT ContactInformation.Id, ContactInformation.Info, ContactInformation.ContactId " +
+                             "FROM ContactInformation " +
+                             "WHERE ContactInformation.Id = @contactId";
+
+			//using (SqlConnection connection = new SqlConnection(connectionString)) //trenger ikke denne for vi har en felles Connection øverst. 
+		
+						Connection.Open();
+				try
+				{
+					using (SqlCommand command = new SqlCommand(cmdText, Connection))
+					{
+
+						SqlParameter para = new SqlParameter("@contactId", contactId);
+						command.Parameters.Add(para);
+
+						using (SqlDataReader reader = command.ExecuteReader())
+						{
+							if (reader.Read())
+							{
+								contactString = $"contactInfo {reader[1]}, ContactId {reader[2]}";
+
+							}
+						}
+
+					}
+				}
+				catch (Exception e)
+				{
+					string errMsg = e.Message;
+					Console.WriteLine(errMsg);
+                    return null;
+                }
+				finally
+				{
+					Connection.Close();
+
+				}
+			
+            return contactString;
         }
 
         public static bool UpdateContact(int contactId, string ssn, string firstName, string lastName)
