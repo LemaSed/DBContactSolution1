@@ -19,7 +19,7 @@ namespace DBContactSolution1
 		{
 			Connection = new SqlConnection(connectionString);
 		}
-		public static int CreateContact(string ssn, string firstName, string LastName )
+		public static int CreateContact(int ssn, string firstName, string LastName )
 		{
 			int identityId = 0;
 			const string cmdText = "INSERT into Contact (SSN, FirstName, LastName) " +
@@ -123,6 +123,7 @@ namespace DBContactSolution1
 
 			return contactString;
 		}
+
 
 	}
 }
