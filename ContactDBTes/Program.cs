@@ -8,9 +8,8 @@ namespace ContactDBTest
 	{
 		static void Main(string[] args)
         {
-            Console.WriteLine(SQLRepository.ReadContact(7));
-            Console.WriteLine(SQLRepository.ReadContact(11));
-            SQLRepository.DeleteContact(11);
+            
+            SQLRepository.UpdateContact(3, "44555", "Sebastian", "Mennen");
         }
 	}
 }

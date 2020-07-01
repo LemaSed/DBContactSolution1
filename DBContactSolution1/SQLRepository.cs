@@ -151,6 +151,50 @@ namespace DBContactSolution1
             return (rowsAffected == 1);
         }
 
+        public static bool UpdateContact(int contactId, string ssn, string firstName, string lastName)
+        {
+            int rowsaffected = 0;
+            const string commandText = "UPDATE CONTACT " +
+                                       "SET SSN = @ssn, FIRSTNAME = @firstName, LASTNAME = @lastName " +
+                                       "WHERE ID = @contactId";
+            try
+            {
+                using (SqlCommand command = new SqlCommand(commandText, Connection))
+                {
+                    Connection.Open();
+					SqlParameter sqlParameter = command.CreateParameter();
+                    sqlParameter.ParameterName = "@contactId";
+                    sqlParameter.Value = contactId;
+                    command.Parameters.Add(sqlParameter);
+
+                    sqlParameter = command.CreateParameter();
+                    sqlParameter.ParameterName = "@ssn";
+                    sqlParameter.Value = ssn;
+                    command.Parameters.Add(sqlParameter);
+
+                    sqlParameter = command.CreateParameter();
+					sqlParameter.ParameterName = "@firstName";
+                    sqlParameter.Value = firstName;
+                    command.Parameters.Add(sqlParameter);
+
+                    sqlParameter = command.CreateParameter();
+					sqlParameter.ParameterName = "@lastName";
+                    sqlParameter.Value = lastName;
+                    command.Parameters.Add(sqlParameter);
+
+                    rowsaffected = command.ExecuteNonQuery();
+
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return rowsaffected == 1;
+        }
+
 		public static int CreateAdress(string street, string city, string zip)
 		{
 			int identityId = 0;
