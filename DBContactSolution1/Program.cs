@@ -1,4 +1,5 @@
 ﻿using System;
+using DBContactSolution1;
 
 namespace ContactDBLibrary
 {
@@ -6,7 +7,8 @@ namespace ContactDBLibrary
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			Console.WriteLine(SQLRepository.ReadContactInformation(2));
+
             Console.WriteLine("test");
 		}
 	}

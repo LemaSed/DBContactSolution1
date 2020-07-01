@@ -127,6 +127,51 @@ namespace DBContactSolution1
 			return contactString;
 		}
 
+		        public static string ReadContactInformation(int contactId)
+        {
+            string contactString = null;
+
+            string cmdText = "SELECT ContactInformation.Id, ContactInformation.Info, ContactInformation.ContactId " +
+                             "FROM ContactInformation " +
+                             "WHERE ContactInformation.Id = @contactId";
+
+			//using (SqlConnection connection = new SqlConnection(connectionString)) //trenger ikke denne for vi har en felles Connection øverst. 
+			//{
+						Connection.Open();
+				try
+				{
+					using (SqlCommand command = new SqlCommand(cmdText, Connection))
+					{
+
+						SqlParameter para = new SqlParameter("@contactId", contactId);
+						command.Parameters.Add(para);
+
+						using (SqlDataReader reader = command.ExecuteReader())
+						{
+							if (reader.Read())
+							{
+								contactString = $"contactInfo {reader[1]}, ContactId {reader[2]}";
+
+							}
+						}
+
+					}
+				}
+				catch (Exception e)
+				{
+					string errMsg = e.Message;
+					Console.WriteLine(errMsg);
+                    return null;
+                }
+				finally
+				{
+					Connection.Close();
+
+				}
+			//}
+            return contactString;
+        }
+
 		public static int CreateAdress(string street, string city, string zip)
 		{
 			int identityId = 0;
