@@ -148,7 +148,7 @@ namespace DBContactSolution1
             return (rowsAffected == 1);
         }
 
-		        public static string ReadContactInformation(int contactId)
+		public static string ReadContactInformation(int contactId)
         {
             string contactString = null;
 
@@ -203,23 +203,24 @@ namespace DBContactSolution1
             {
                 using (SqlCommand command = new SqlCommand(commandText, Connection))
                 {
-                    Connection.Open();
+					Connection.Open();
+
 					SqlParameter sqlParameter = command.CreateParameter();
                     sqlParameter.ParameterName = "@contactId";
                     sqlParameter.Value = contactId;
                     command.Parameters.Add(sqlParameter);
 
-                    sqlParameter = command.CreateParameter();
+                   
                     sqlParameter.ParameterName = "@ssn";
                     sqlParameter.Value = ssn;
                     command.Parameters.Add(sqlParameter);
 
-                    sqlParameter = command.CreateParameter();
+                  
 					sqlParameter.ParameterName = "@firstName";
                     sqlParameter.Value = firstName;
                     command.Parameters.Add(sqlParameter);
 
-                    sqlParameter = command.CreateParameter();
+                    
 					sqlParameter.ParameterName = "@lastName";
                     sqlParameter.Value = lastName;
                     command.Parameters.Add(sqlParameter);
@@ -237,7 +238,7 @@ namespace DBContactSolution1
             return rowsaffected == 1;
         }
 
-		public static int CreateAdress(string street, string city, string zip)
+		public static int CreateAddress(string street, string city, string zip)
 		{
 			int identityId = 0;
 			const string cmdText = "INSERT into Address (Street, City, Zip) " +
@@ -360,6 +361,44 @@ namespace DBContactSolution1
 			}
 
 			return (rowsAffected == 2);
+
+		}
+
+		public static bool UpdateAddress(int Id, string street, string city, string zip)
+		{
+			int rowsAffected = 0;
+
+			string cmd = "UPDATE ADDRESS " +
+			             "SET Street= @street, City = @street, Zip = @zip " +
+			             "WHERE Id = @id";
+
+			try
+			{
+				using (SqlCommand commmand = new SqlCommand(cmd, Connection))
+				
+				{
+					Connection.Open();
+
+					commmand.Parameters.Add("@id", SqlDbType.Int).Value = Id;
+
+					commmand.Parameters.Add("@street", SqlDbType.NVarChar).Value=street;
+
+					commmand.Parameters.Add("@city", SqlDbType.NVarChar).Value = city;
+
+					commmand.Parameters.Add("@zip", SqlDbType.NVarChar).Value = zip;
+
+					rowsAffected = commmand.ExecuteNonQuery();
+				}
+			}
+
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+				return false;
+			}
+
+			return rowsAffected == 1;
+
 
 		}
 
