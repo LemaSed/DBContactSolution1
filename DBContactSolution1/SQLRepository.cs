@@ -223,7 +223,7 @@ namespace DBContactSolution1
             return contactString;
         }
 
-        public static bool UpdateContact(int contactId, string ssn, string firstName, string lastName)
+        /*public static bool UpdateContact(int contactId, string ssn, string firstName, string lastName)
         {
             int rowsaffected = 0;
             const string commandText = "UPDATE CONTACT " +
@@ -266,7 +266,7 @@ namespace DBContactSolution1
             }
 
             return rowsaffected == 1;
-        }
+        }*/
 
 		public static int CreateAddress(string street, string city, string zip)
 		{
