@@ -112,10 +112,10 @@ namespace DBContactSolution1
 					Console.WriteLine("ÆSJ {0}", e.Message);
 					return null;
 				}
-				finally
+				/*finally
 				{
 					Connection.Close();
-				}
+				}*/
 
 			return contactString;
 		}
@@ -172,6 +172,37 @@ namespace DBContactSolution1
 
 			return identityId;
 		}
+        public static bool DeleteContact(int contactId)
+        {
+            
+
+            int rowsAffected = 0;
+
+            const string commandText = "DELETE FROM CONTACT " +
+                                 "WHERE CONTACT.ID = @contactId";
+
+			
+
+            try
+            {
+                using (SqlCommand command = new SqlCommand(commandText, Connection))
+                {
+                    
+					Connection.Open();
+                    SqlParameter para = new SqlParameter("contactId", contactId);
+                    command.Parameters.Add(para);
+                    rowsAffected = command.ExecuteNonQuery();
+                }
+
+            }
+            catch (Exception e)
+            {
+                
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            return (rowsAffected == 1);
+        }
 
 	}
 }
