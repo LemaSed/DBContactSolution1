@@ -204,27 +204,13 @@ namespace DBContactSolution1
                 using (SqlCommand command = new SqlCommand(commandText, Connection))
                 {
                     Connection.Open();
-					SqlParameter sqlParameter = command.CreateParameter();
-                    sqlParameter.ParameterName = "@contactId";
-                    sqlParameter.Value = contactId;
-                    command.Parameters.Add(sqlParameter);
+					
+                    command.Parameters.Add("@contactId", SqlDbType.Int).Value = contactId;
+                    command.Parameters.Add("@ssn", SqlDbType.Int).Value = ssn;
+                    command.Parameters.Add("@firstName", SqlDbType.NVarChar).Value = firstName;
+                    command.Parameters.Add("@lastName", SqlDbType.NVarChar).Value = lastName;
 
-                    sqlParameter = command.CreateParameter();
-                    sqlParameter.ParameterName = "@ssn";
-                    sqlParameter.Value = ssn;
-                    command.Parameters.Add(sqlParameter);
-
-                    sqlParameter = command.CreateParameter();
-					sqlParameter.ParameterName = "@firstName";
-                    sqlParameter.Value = firstName;
-                    command.Parameters.Add(sqlParameter);
-
-                    sqlParameter = command.CreateParameter();
-					sqlParameter.ParameterName = "@lastName";
-                    sqlParameter.Value = lastName;
-                    command.Parameters.Add(sqlParameter);
-
-                    rowsaffected = command.ExecuteNonQuery();
+					rowsaffected = command.ExecuteNonQuery();
 
                 }
             }
@@ -263,6 +249,8 @@ namespace DBContactSolution1
 					sqlParameter.ParameterName = "@zip";
 					sqlParameter.Value = zip;
 					command.Parameters.Add(sqlParameter);
+
+					
 
 					//command.Parameters.Add(parameterList);
 					Connection.Open();
