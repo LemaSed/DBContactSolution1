@@ -148,7 +148,37 @@ namespace DBContactSolution1
             return (rowsAffected == 1);
         }
 
-		        public static string ReadContactInformation(int contactId)
+        public static bool UpdateContact(int contactId, string ssn, string firstName, string lastName)
+        {
+            int rowsaffected = 0;
+            const string commandText = "UPDATE CONTACT " +
+                                       "SET SSN = @ssn, FIRSTNAME = @firstName, LASTNAME = @lastName " +
+                                       "WHERE ID = @contactId";
+            try
+            {
+                using (SqlCommand command = new SqlCommand(commandText, Connection))
+                {
+                    Connection.Open();
+
+                    command.Parameters.Add("@contactId", SqlDbType.Int).Value = contactId;
+                    command.Parameters.Add("@ssn", SqlDbType.Int).Value = ssn;
+                    command.Parameters.Add("@firstName", SqlDbType.NVarChar).Value = firstName;
+                    command.Parameters.Add("@lastName", SqlDbType.NVarChar).Value = lastName;
+
+                    rowsaffected = command.ExecuteNonQuery();
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+            return rowsaffected == 1;
+        }
+
+		public static string ReadContactInformation(int contactId)
         {
             string contactString = null;
 
@@ -193,35 +223,7 @@ namespace DBContactSolution1
             return contactString;
         }
 
-        public static bool UpdateContact(int contactId, string ssn, string firstName, string lastName)
-        {
-            int rowsaffected = 0;
-            const string commandText = "UPDATE CONTACT " +
-                                       "SET SSN = @ssn, FIRSTNAME = @firstName, LASTNAME = @lastName " +
-                                       "WHERE ID = @contactId";
-            try
-            {
-                using (SqlCommand command = new SqlCommand(commandText, Connection))
-                {
-                    Connection.Open();
-					
-                    command.Parameters.Add("@contactId", SqlDbType.Int).Value = contactId;
-                    command.Parameters.Add("@ssn", SqlDbType.Int).Value = ssn;
-                    command.Parameters.Add("@firstName", SqlDbType.NVarChar).Value = firstName;
-                    command.Parameters.Add("@lastName", SqlDbType.NVarChar).Value = lastName;
-
-					rowsaffected = command.ExecuteNonQuery();
-
-                }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
-            }
-
-            return rowsaffected == 1;
-        }
+       
 
 		public static int CreateAdress(string street, string city, string zip)
 		{
@@ -252,7 +254,7 @@ namespace DBContactSolution1
 
 					
 
-					//command.Parameters.Add(parameterList);
+					
 					Connection.Open();
 					using (SqlDataReader reader = command.ExecuteReader())
 					{
