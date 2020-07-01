@@ -104,7 +104,7 @@ namespace DBContactSolution1
 						{
 							if (reader.Read())
 							{
-								contactString = $"ContactId {reader[0]}, SSN {reader[1]}, FirstName {reader[2]}, LastName {reader[3]}";
+								contactString = $"ContactId {reader[0]}, SSN {reader[1]}, Name {reader[2]} {reader[3]}";
 
 							}
 						}
@@ -112,7 +112,7 @@ namespace DBContactSolution1
 				}
 				catch (Exception e)
 				{
-					string errMsg = e.Message;
+					
 					Console.WriteLine("ÆSJ {0}", e.Message);
 					return null;
 				}
