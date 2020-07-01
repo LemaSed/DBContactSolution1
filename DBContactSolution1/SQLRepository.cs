@@ -228,7 +228,7 @@ namespace DBContactSolution1
 		public static int CreateAdress(string street, string city, string zip)
 		{
 			int identityId = 0;
-			const string cmdText = "INSERT into Adress (Street, City, Zip) " +
+			const string cmdText = "INSERT into Address (Street, City, Zip) " +
 				"VALUES (@street, @city, @zip) " +
 				"SELECT SCOPE_IDENTITY() as IdentityId ";
 
@@ -318,6 +318,38 @@ namespace DBContactSolution1
 			}
 
 			return addressString;
+
+		}
+
+		public static bool DeleteAddress(int addressId)
+		{
+			int rowsAffected = 0;
+
+			string cmdText = "DELETE FROM Contact_Address " +
+							 "WHERE Contact_Address.AddressId = @addressId "+
+
+							 "DELETE FROM Address " +
+			                 "WHERE Address.Id = @addressId";
+			
+			try
+			{
+				using (SqlCommand command = new SqlCommand(cmdText, Connection))
+				{
+					Connection.Open();
+					SqlParameter parameter = new SqlParameter("@addressId", addressId);
+					command.Parameters.Add(parameter);
+					rowsAffected = command.ExecuteNonQuery();
+				}
+			}
+
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+
+				return false;
+			}
+
+			return (rowsAffected == 2);
 
 		}
 

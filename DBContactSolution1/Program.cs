@@ -7,10 +7,10 @@ namespace ContactDBLibrary
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine(SQLRepository.ReadContactInformation(2));
+	
 
-            Console.WriteLine("test");
 		}
 	}
 }
+		
 	
