@@ -175,3 +175,8 @@ namespace DBContactSolution1
 
 	}
 }
+//command.Parameters.Add("@name SqlDbType.NVarChar).Value = name;  <-- En lettere måte å legge til parameter til SQL command. 
+//ExecuteNonQuery er det en static spørring. Du får ingenting tilbake
+// ExecuteReader = Ville fått en read object som man kan få tilbake. For å få printet ut radene i tabellen: 
+//while (DataTableReader.Read()){
+	//osv
