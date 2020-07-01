@@ -9,7 +9,7 @@ namespace ContactDBTest
 		static void Main(string[] args)
         {
             
-            SQLRepository.UpdateContact(3, "44555", "Sebastian", "Mennen");
+            SQLRepository.UpdateContact(3, "44558", "Sebastian", "Mennen");
         }
 	}
 }
